@@ -1,0 +1,28 @@
+services:
+  - type: web
+    name: dfimoveis-api
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn api:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: dfimoveis-db
+          property: connectionString
+
+  - type: web
+    name: dfimoveis-frontend
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: streamlit run frontend.py --server.port $PORT --server.address 0.0.0.0 --server.headless true
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: dfimoveis-db
+          property: connectionString
+      - key: API_URL
+        value: https://dfimoveis-api.onrender.com
+
+databases:
+  - name: dfimoveis-db
+    plan: free
