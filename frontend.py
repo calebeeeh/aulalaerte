@@ -26,7 +26,7 @@ def carregar_dados():
 
 
 with st.sidebar:
-    st.image("https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Bras%C3%ADlia_DF_01.jpg/320px-Bras%C3%ADlia_DF_01.jpg", use_column_width=True)
+    st.image("https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Bras%C3%ADlia_DF_01.jpg/320px-Bras%C3%ADlia_DF_01.jpg", width=250)
     st.markdown("### Filtros")
     st.info("Dados coletados de **Taguatinga Norte, DF** via dfimoveis.com.br")
     if st.button("🔄 Atualizar dados", use_container_width=True):
@@ -108,7 +108,6 @@ with col3:
         color="quartos_str",
         labels={"tamanho_m2": "Tamanho (m²)", "preco": "Aluguel (R$)", "quartos_str": "Quartos"},
         hover_data={"endereco": True},
-        trendline="ols",
     )
     fig3.update_layout(plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)")
     st.plotly_chart(fig3, use_container_width=True)
