@@ -1,12 +1,8 @@
-import os
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-import requests
 from sqlalchemy import text
 from database import engine, criar_tabelas
-
-API_URL = os.getenv("API_URL", "http://localhost:8000")
 
 st.set_page_config(page_title="DF Imóveis", page_icon="🏠", layout="wide")
 st.title("🏠 DF Imóveis — Dashboard")
@@ -30,29 +26,7 @@ def carregar_dados():
 
 
 with st.sidebar:
-    st.header("Executar Scraping")
-    tipo = st.selectbox("Tipo de negócio", ["ALUGUEL", "VENDA"])
-    tipos = st.selectbox("Tipo de imóvel", ["APARTAMENTO", "CASA", "COMERCIAL"])
-    estado = st.text_input("Estado", value="DF")
-    cidade = st.text_input("Cidade", value="TAGUATINGA")
-    bairro = st.text_input("Bairro", value="TAGUATINGA NORTE")
-
-    if st.button("▶ Iniciar Scraping", use_container_width=True):
-        try:
-            resp = requests.post(
-                f"{API_URL}/scraping",
-                params={"tipo": tipo, "tipos": tipos, "estado": estado,
-                        "cidade": cidade, "bairro": bairro},
-                timeout=5,
-            )
-            if resp.status_code == 200:
-                st.success("Scraping iniciado em background!")
-            else:
-                st.warning(resp.json().get("mensagem", "Erro."))
-        except Exception:
-            st.error("API não está rodando.")
-
-    st.markdown("---")
+    st.info("Os dados são coletados localmente e atualizados via GitHub.")
     if st.button("🔄 Atualizar dados", use_container_width=True):
         st.cache_data.clear()
         st.rerun()
