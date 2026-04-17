@@ -1,0 +1,24 @@
+services:
+  api:
+    build: .
+    command: uvicorn api:app --host 0.0.0.0 --port 8000 --reload
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./imoveis.db:/app/imoveis.db
+    shm_size: 256m
+    environment:
+      - DOCKER=true
+
+  frontend:
+    build: .
+    command: streamlit run frontend.py --server.port 8501 --server.address 0.0.0.0 --server.headless true
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./imoveis.db:/app/imoveis.db
+    depends_on:
+      - api
+    environment:
+      - API_URL=http://api:8000
+      - DOCKER=true

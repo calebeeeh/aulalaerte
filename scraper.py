@@ -1,3 +1,4 @@
+import os
 import time
 import re
 import undetected_chromedriver as uc
@@ -51,7 +52,7 @@ def executar_scraping(
     estado: str = "DF",
     cidade: str = "TAGUATINGA",
     bairro: str = "TAGUATINGA NORTE",
-    headless: bool = False,
+    headless: bool = os.getenv("DOCKER", "false").lower() == "true",
 ) -> int:
     options = uc.ChromeOptions()
     options.add_argument("--disable-blink-features=AutomationControlled")
